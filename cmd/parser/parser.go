@@ -2,7 +2,7 @@ package parser
 
 import (
 	"fmt"
-	"github.com/an5uz/maxo/lexer"
+	"github.com/an5uz/maxo/cmd/lexer"
 	"strings"
 
 )
