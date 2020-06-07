@@ -7,7 +7,28 @@ import (
 	"unicode/utf8"
 )
 
+/*
+KEYWORDS
+break        default      func         interface    select
+case         defer        go           map          struct
+chan         else         goto         package      switch
+const        fallthrough  if           range        type
+continue     for          import       return       var
 
+OPERATORS
++    &     +=    &=     &&    ==    !=    (    )
+-    |     -=    |=     ||    <     <=    [    ]
+*    ^     *=    ^=     <-    >     >=    {    }
+/    <<    /=    <<=    ++    =     :=    ,    ;
+%    >>    %=    >>=    --    !     ...   .    :
+     &^          &^=
+
+TOKENS
+ identifiers,
+ keywords,
+ operators and punctuation,
+ literals.
+*/
 
 type ItemKind int
 
