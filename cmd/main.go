@@ -9,6 +9,8 @@ var options struct {
 	version   bool
 }
 
+// super for the future make maxo parse json through https://github.com/minio/simdjson-go
+
 func main() {
 	flag.BoolVar(&options.version,"version", false, "View the version of maxo lang")
 	flag.Parse()

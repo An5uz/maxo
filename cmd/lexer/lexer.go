@@ -23,11 +23,11 @@ OPERATORS
 %    >>    %=    >>=    --    !     ...   .    :
      &^          &^=
 
-TOKENS
+GOLANG TOKENS
  identifiers,
  keywords,
  operators and punctuation,
- literals.
+ literals
 */
 
 type ItemKind int
@@ -37,12 +37,10 @@ const (
 	LineBreak
 	NewLine
 	Text
-	Digit
-	StringQuote
-	SingleLineComment
-	MultiLineCommentStart
-	MultiLineCommentEnd
-	Operator
+	Literal
+	Comment
+	Operator // includes punctuation
+	Keyword
 	EOF
 	ItemError
 )
@@ -175,6 +173,7 @@ func (l *Lexer) lexEOF(k ItemKind) stateFn {
 // lexText scans what is expected to be text.
 func lexText(l *Lexer) stateFn {
 	for {
+		// TODO add fine grained emission of ItemKind, more cases... operators etc
 		r := l.next()
 		switch {
 		case r == eof:
@@ -207,7 +206,6 @@ func lexWhitespace(l *Lexer) stateFn {
 		}
 	}
 }
-// TODO add lexItemKind stuff that is still missing
 
 
 // ParseSimple is a simple routine to preserve whitespace while reversing the
