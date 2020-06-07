@@ -32,16 +32,16 @@ func (p *parser) parse() {
 
 	for item := range p.lex.Items {
 		switch item.Kind {
-		case lexer.ItemEOF:
+		case lexer.EOF:
 			p.result = sb.String()
 			return
 		case lexer.ItemError:
 			p.errItem = &item
 			return
-		case lexer.ItemText:
+		case lexer.Text:
 			sb.WriteString(lexer.Reverse(item.Value))
 
-		case lexer.ItemWhiteSpace:
+		case lexer.WhiteSpace:
 			sb.WriteString(item.Value)
 		}
 	}

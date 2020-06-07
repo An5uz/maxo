@@ -12,9 +12,17 @@ import (
 type ItemKind int
 
 const (
-	ItemWhiteSpace ItemKind = iota
-	ItemEOF
-	ItemText
+	WhiteSpace ItemKind = iota
+	LineBreak
+	NewLine
+	Text
+	Digit
+	StringQuote
+	SingleLineComment
+	MultiLineCommentStart
+	MultiLineCommentEnd
+	Operator
+	EOF
 	ItemError
 )
 
@@ -32,7 +40,7 @@ type Item struct {
 	Value string
 }
 
-const eof = -1
+const eof = rune(0)
 
 // stateFn is a function that is specific to a state within the string.
 type stateFn func(*Lexer) stateFn
@@ -139,7 +147,7 @@ func (l *Lexer) lexEOF(k ItemKind) stateFn {
 	}
 
 	l.emit(k)
-	l.emit(ItemEOF)
+	l.emit(EOF)
 	return nil
 }
 
@@ -149,13 +157,13 @@ func lexText(l *Lexer) stateFn {
 		r := l.next()
 		switch {
 		case r == eof:
-			return l.lexEOF(ItemText)
+			return l.lexEOF(Text)
 		case unicode.IsSpace(r):
 			l.backup()
 
 			// emit any text we've accumulated.
 			if l.Position > l.start {
-				l.emit(ItemText)
+				l.emit(Text)
 			}
 			return lexWhitespace
 		}
@@ -168,16 +176,18 @@ func lexWhitespace(l *Lexer) stateFn {
 		r := l.next()
 		switch {
 		case r == eof:
-			return l.lexEOF(ItemWhiteSpace)
+			return l.lexEOF(WhiteSpace)
 		case !unicode.IsSpace(r):
 			l.backup()
 			if l.Position > l.start {
-				l.emit(ItemWhiteSpace)
+				l.emit(WhiteSpace)
 			}
 			return lexText
 		}
 	}
 }
+// TODO add lexItemKind stuff that is still missing
+
 
 // ParseSimple is a simple routine to preserve whitespace while reversing the
 // characters in words.

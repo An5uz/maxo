@@ -1,0 +1,12 @@
+const numConst: int = 3;
+var stringVar: string = "hello";
+stringVar = "world";
+
+const array: []int = [1,2,3];
+const aMap: map<string, int> = {"one":1, "two":2}; // this is a comment
+
+const refMap = &aMap;
+
+func salute() {
+    print("hello" + stringVar);
+}
